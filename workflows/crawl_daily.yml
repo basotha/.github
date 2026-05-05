@@ -23,7 +23,7 @@ jobs:
           pip install requests beautifulsoup4 pandas
 
       - name: Chạy script cào số
-        run: python scheduler_crawler_mb.py
+        run: python mienbac.py
 
       - name: Tự động đẩy file JSON lên GitHub
         run: |

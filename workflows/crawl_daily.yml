@@ -3,7 +3,7 @@ name: Tự động cập nhật số miền Bắc
 on:
   schedule:
     # Chạy vào 11:45 UTC (tức 18:45 giờ Việt Nam) hàng ngày
-    - cron: '45 11 * * *'
+    - cron: '06 18 * * *'
   workflow_dispatch: # Nút bấm để bạn chạy tay khi muốn test
 
 jobs:

@@ -1,0 +1,34 @@
+name: Tự động cập nhật số miền Bắc
+
+on:
+  schedule:
+    # Chạy vào 11:45 UTC (tức 18:45 giờ Việt Nam) hàng ngày
+    - cron: '45 11 * * *'
+  workflow_dispatch: # Nút bấm để bạn chạy tay khi muốn test
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v3
+
+      - name: Thiết lập Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Cài đặt thư viện cần thiết
+        run: |
+          pip install requests beautifulsoup4 pandas
+
+      - name: Chạy script cào số
+        run: python mienbac.py
+
+      - name: Tự động đẩy file JSON lên GitHub
+        run: |
+          git config --global user.name "Robot SoMayMan"
+          git config --global user.email "bot@somayman.top"
+          git add data_bac.json
+          git commit -m "Cập nhật kết quả ngày $(date)" || exit 0
+          git push

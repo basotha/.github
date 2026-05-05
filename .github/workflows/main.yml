@@ -2,28 +2,28 @@ name: Tự động cập nhật số miền Bắc
 
 on:
   schedule:
-    # Chạy vào 11:45 UTC (tức 18:45 giờ Việt Nam) hàng ngày
     - cron: '45 11 * * *'
-  workflow_dispatch: # Nút bấm để bạn chạy tay khi muốn test
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mã nguồn
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Thiết lập Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.10'
 
-      - name: Cài đặt thư viện cần thiết
-        run: |
-          pip install requests beautifulsoup4 pandas
+      - name: Cài đặt thư viện
+        run: pip install requests beautifulsoup4 pandas
 
       - name: Chạy script cào số
+        # Ép robot đứng ở thư mục gốc để tìm file mienbac.py
         run: python mienbac.py
+        working-directory: ./
 
       - name: Tự động đẩy file JSON lên GitHub
         run: |
